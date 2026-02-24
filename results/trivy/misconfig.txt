@@ -1,0 +1,800 @@
+
+Report Summary
+
+┌──────────────────────────────────────────────────┬────────────┬───────────────────┐
+│                      Target                      │    Type    │ Misconfigurations │
+├──────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ Dockerfile                                       │ dockerfile │         2         │
+├──────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ node_modules/getos/Dockerfile                    │ dockerfile │         7         │
+├──────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ node_modules/getos/tests/alpine/3.3/Dockerfile   │ dockerfile │         4         │
+├──────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ node_modules/getos/tests/debian/7.3/Dockerfile   │ dockerfile │         7         │
+├──────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ node_modules/getos/tests/debian/7.4/Dockerfile   │ dockerfile │         7         │
+├──────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ node_modules/getos/tests/debian/7.5/Dockerfile   │ dockerfile │         7         │
+├──────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ node_modules/getos/tests/debian/7.6/Dockerfile   │ dockerfile │         7         │
+├──────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ node_modules/getos/tests/fedora/20/Dockerfile    │ dockerfile │         5         │
+├──────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ node_modules/getos/tests/ubuntu/13.10/Dockerfile │ dockerfile │         6         │
+├──────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ node_modules/getos/tests/ubuntu/14.04/Dockerfile │ dockerfile │         6         │
+├──────────────────────────────────────────────────┼────────────┼───────────────────┤
+│ test/smoke/Dockerfile                            │ dockerfile │         4         │
+└──────────────────────────────────────────────────┴────────────┴───────────────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+
+Dockerfile (dockerfile)
+=======================
+Tests: 27 (SUCCESSES: 25, FAILURES: 2)
+Failures: 2 (UNKNOWN: 0, LOW: 1, MEDIUM: 1, HIGH: 0, CRITICAL: 0)
+
+DS-0001 (MEDIUM): Specify a tag in the 'FROM' statement for image 'gcr.io/distroless/nodejs22-debian12'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+When using a 'FROM' statement you should use a specific tag to avoid uncontrolled behavior when the image is updated.
+
+See https://avd.aquasec.com/misconfig/ds-0001
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ Dockerfile:22
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  22 [ FROM gcr.io/distroless/nodejs22-debian12
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0026 (LOW): Add HEALTHCHECK instruction in your Dockerfile
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.
+
+See https://avd.aquasec.com/misconfig/ds-0026
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+node_modules/getos/Dockerfile (dockerfile)
+==========================================
+Tests: 28 (SUCCESSES: 21, FAILURES: 7)
+Failures: 7 (UNKNOWN: 0, LOW: 2, MEDIUM: 0, HIGH: 5, CRITICAL: 0)
+
+DS-0002 (HIGH): Specify at least 1 USER command in Dockerfile with non-root user as argument
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.
+
+See https://avd.aquasec.com/misconfig/ds-0002
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0005 (LOW): Consider using 'COPY . /usr/src/' command instead of 'ADD . /usr/src/'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.
+
+See https://avd.aquasec.com/misconfig/ds-0005
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/Dockerfile:17
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  17 [ ADD . /usr/src/
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0017 (HIGH): The instruction 'RUN <package-manager> update' should always be followed by '<package-manager> install' in the same RUN statement.
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+The instruction 'RUN <package-manager> update' should always be followed by '<package-manager> install' in the same RUN statement.
+
+See https://avd.aquasec.com/misconfig/ds-0017
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/Dockerfile:14
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  14 [ RUN apt-get update
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0022 (HIGH): MAINTAINER should not be used: 'MAINTAINER William Blankenship <william.jblankenship@gmail.com>'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+MAINTAINER has been deprecated since Docker 1.13.0.
+
+See https://avd.aquasec.com/misconfig/ds-0022
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/Dockerfile:2
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   2 [ MAINTAINER William Blankenship <william.jblankenship@gmail.com>
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0026 (LOW): Add HEALTHCHECK instruction in your Dockerfile
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.
+
+See https://avd.aquasec.com/misconfig/ds-0026
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0029 (HIGH): '--no-install-recommends' flag is missed: 'apt-get install nodejs -y --force-yes'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+'apt-get' install should use '--no-install-recommends' to minimize image size.
+
+See https://avd.aquasec.com/misconfig/ds-0029
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/Dockerfile:15
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  15 [ RUN apt-get install nodejs -y --force-yes
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0029 (HIGH): '--no-install-recommends' flag is missed: 'apt-get update &&     apt-get install -y --force-yes       curl       apt-transport-https       lsb-release       build-essential       python-all'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+'apt-get' install should use '--no-install-recommends' to minimize image size.
+
+See https://avd.aquasec.com/misconfig/ds-0029
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/Dockerfile:5-11
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   5 ┌ RUN apt-get update && \
+   6 │     apt-get install -y --force-yes \
+   7 │       curl \
+   8 │       apt-transport-https \
+   9 │       lsb-release \
+  10 │       build-essential \
+  11 └       python-all
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+node_modules/getos/tests/alpine/3.3/Dockerfile (dockerfile)
+===========================================================
+Tests: 27 (SUCCESSES: 23, FAILURES: 4)
+Failures: 4 (UNKNOWN: 0, LOW: 2, MEDIUM: 0, HIGH: 2, CRITICAL: 0)
+
+DS-0002 (HIGH): Specify at least 1 USER command in Dockerfile with non-root user as argument
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.
+
+See https://avd.aquasec.com/misconfig/ds-0002
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0005 (LOW): Consider using 'COPY . /usr/src/' command instead of 'ADD . /usr/src/'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.
+
+See https://avd.aquasec.com/misconfig/ds-0005
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/alpine/3.3/Dockerfile:8
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   8 [ ADD . /usr/src/
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0022 (HIGH): MAINTAINER should not be used: 'MAINTAINER David Routhieau "rootio@protonmail.com"'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+MAINTAINER has been deprecated since Docker 1.13.0.
+
+See https://avd.aquasec.com/misconfig/ds-0022
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/alpine/3.3/Dockerfile:3
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   3 [ MAINTAINER David Routhieau "rootio@protonmail.com"
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0026 (LOW): Add HEALTHCHECK instruction in your Dockerfile
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.
+
+See https://avd.aquasec.com/misconfig/ds-0026
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+node_modules/getos/tests/debian/7.3/Dockerfile (dockerfile)
+===========================================================
+Tests: 28 (SUCCESSES: 21, FAILURES: 7)
+Failures: 7 (UNKNOWN: 0, LOW: 2, MEDIUM: 0, HIGH: 5, CRITICAL: 0)
+
+DS-0002 (HIGH): Specify at least 1 USER command in Dockerfile with non-root user as argument
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.
+
+See https://avd.aquasec.com/misconfig/ds-0002
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0005 (LOW): Consider using 'COPY . /usr/src/' command instead of 'ADD . /usr/src/'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.
+
+See https://avd.aquasec.com/misconfig/ds-0005
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/debian/7.3/Dockerfile:17
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  17 [ ADD . /usr/src/
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0017 (HIGH): The instruction 'RUN <package-manager> update' should always be followed by '<package-manager> install' in the same RUN statement.
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+The instruction 'RUN <package-manager> update' should always be followed by '<package-manager> install' in the same RUN statement.
+
+See https://avd.aquasec.com/misconfig/ds-0017
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/debian/7.3/Dockerfile:14
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  14 [ RUN apt-get update
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0022 (HIGH): MAINTAINER should not be used: 'MAINTAINER William Blankenship <william.jblankenship@gmail.com>'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+MAINTAINER has been deprecated since Docker 1.13.0.
+
+See https://avd.aquasec.com/misconfig/ds-0022
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/debian/7.3/Dockerfile:2
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   2 [ MAINTAINER William Blankenship <william.jblankenship@gmail.com>
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0026 (LOW): Add HEALTHCHECK instruction in your Dockerfile
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.
+
+See https://avd.aquasec.com/misconfig/ds-0026
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0029 (HIGH): '--no-install-recommends' flag is missed: 'apt-get install nodejs -y --force-yes'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+'apt-get' install should use '--no-install-recommends' to minimize image size.
+
+See https://avd.aquasec.com/misconfig/ds-0029
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/debian/7.3/Dockerfile:15
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  15 [ RUN apt-get install nodejs -y --force-yes
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0029 (HIGH): '--no-install-recommends' flag is missed: 'apt-get update &&     apt-get install -y --force-yes       curl       apt-transport-https       lsb-release       build-essential       python-all'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+'apt-get' install should use '--no-install-recommends' to minimize image size.
+
+See https://avd.aquasec.com/misconfig/ds-0029
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/debian/7.3/Dockerfile:5-11
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   5 ┌ RUN apt-get update && \
+   6 │     apt-get install -y --force-yes \
+   7 │       curl \
+   8 │       apt-transport-https \
+   9 │       lsb-release \
+  10 │       build-essential \
+  11 └       python-all
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+node_modules/getos/tests/debian/7.4/Dockerfile (dockerfile)
+===========================================================
+Tests: 28 (SUCCESSES: 21, FAILURES: 7)
+Failures: 7 (UNKNOWN: 0, LOW: 2, MEDIUM: 0, HIGH: 5, CRITICAL: 0)
+
+DS-0002 (HIGH): Specify at least 1 USER command in Dockerfile with non-root user as argument
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.
+
+See https://avd.aquasec.com/misconfig/ds-0002
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0005 (LOW): Consider using 'COPY . /usr/src/' command instead of 'ADD . /usr/src/'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.
+
+See https://avd.aquasec.com/misconfig/ds-0005
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/debian/7.4/Dockerfile:17
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  17 [ ADD . /usr/src/
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0017 (HIGH): The instruction 'RUN <package-manager> update' should always be followed by '<package-manager> install' in the same RUN statement.
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+The instruction 'RUN <package-manager> update' should always be followed by '<package-manager> install' in the same RUN statement.
+
+See https://avd.aquasec.com/misconfig/ds-0017
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/debian/7.4/Dockerfile:14
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  14 [ RUN apt-get update
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0022 (HIGH): MAINTAINER should not be used: 'MAINTAINER William Blankenship <william.jblankenship@gmail.com>'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+MAINTAINER has been deprecated since Docker 1.13.0.
+
+See https://avd.aquasec.com/misconfig/ds-0022
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/debian/7.4/Dockerfile:2
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   2 [ MAINTAINER William Blankenship <william.jblankenship@gmail.com>
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0026 (LOW): Add HEALTHCHECK instruction in your Dockerfile
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.
+
+See https://avd.aquasec.com/misconfig/ds-0026
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0029 (HIGH): '--no-install-recommends' flag is missed: 'apt-get install nodejs -y --force-yes'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+'apt-get' install should use '--no-install-recommends' to minimize image size.
+
+See https://avd.aquasec.com/misconfig/ds-0029
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/debian/7.4/Dockerfile:15
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  15 [ RUN apt-get install nodejs -y --force-yes
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0029 (HIGH): '--no-install-recommends' flag is missed: 'apt-get update &&     apt-get install -y --force-yes       curl       apt-transport-https       lsb-release       build-essential       python-all'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+'apt-get' install should use '--no-install-recommends' to minimize image size.
+
+See https://avd.aquasec.com/misconfig/ds-0029
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/debian/7.4/Dockerfile:5-11
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   5 ┌ RUN apt-get update && \
+   6 │     apt-get install -y --force-yes \
+   7 │       curl \
+   8 │       apt-transport-https \
+   9 │       lsb-release \
+  10 │       build-essential \
+  11 └       python-all
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+node_modules/getos/tests/debian/7.5/Dockerfile (dockerfile)
+===========================================================
+Tests: 28 (SUCCESSES: 21, FAILURES: 7)
+Failures: 7 (UNKNOWN: 0, LOW: 2, MEDIUM: 0, HIGH: 5, CRITICAL: 0)
+
+DS-0002 (HIGH): Specify at least 1 USER command in Dockerfile with non-root user as argument
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.
+
+See https://avd.aquasec.com/misconfig/ds-0002
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0005 (LOW): Consider using 'COPY . /usr/src/' command instead of 'ADD . /usr/src/'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.
+
+See https://avd.aquasec.com/misconfig/ds-0005
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/debian/7.5/Dockerfile:17
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  17 [ ADD . /usr/src/
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0017 (HIGH): The instruction 'RUN <package-manager> update' should always be followed by '<package-manager> install' in the same RUN statement.
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+The instruction 'RUN <package-manager> update' should always be followed by '<package-manager> install' in the same RUN statement.
+
+See https://avd.aquasec.com/misconfig/ds-0017
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/debian/7.5/Dockerfile:14
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  14 [ RUN apt-get update
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0022 (HIGH): MAINTAINER should not be used: 'MAINTAINER William Blankenship <william.jblankenship@gmail.com>'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+MAINTAINER has been deprecated since Docker 1.13.0.
+
+See https://avd.aquasec.com/misconfig/ds-0022
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/debian/7.5/Dockerfile:2
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   2 [ MAINTAINER William Blankenship <william.jblankenship@gmail.com>
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0026 (LOW): Add HEALTHCHECK instruction in your Dockerfile
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.
+
+See https://avd.aquasec.com/misconfig/ds-0026
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0029 (HIGH): '--no-install-recommends' flag is missed: 'apt-get install nodejs -y --force-yes'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+'apt-get' install should use '--no-install-recommends' to minimize image size.
+
+See https://avd.aquasec.com/misconfig/ds-0029
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/debian/7.5/Dockerfile:15
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  15 [ RUN apt-get install nodejs -y --force-yes
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0029 (HIGH): '--no-install-recommends' flag is missed: 'apt-get update &&     apt-get install -y --force-yes       curl       apt-transport-https       lsb-release       build-essential       python-all'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+'apt-get' install should use '--no-install-recommends' to minimize image size.
+
+See https://avd.aquasec.com/misconfig/ds-0029
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/debian/7.5/Dockerfile:5-11
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   5 ┌ RUN apt-get update && \
+   6 │     apt-get install -y --force-yes \
+   7 │       curl \
+   8 │       apt-transport-https \
+   9 │       lsb-release \
+  10 │       build-essential \
+  11 └       python-all
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+node_modules/getos/tests/debian/7.6/Dockerfile (dockerfile)
+===========================================================
+Tests: 28 (SUCCESSES: 21, FAILURES: 7)
+Failures: 7 (UNKNOWN: 0, LOW: 2, MEDIUM: 0, HIGH: 5, CRITICAL: 0)
+
+DS-0002 (HIGH): Specify at least 1 USER command in Dockerfile with non-root user as argument
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.
+
+See https://avd.aquasec.com/misconfig/ds-0002
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0005 (LOW): Consider using 'COPY . /usr/src/' command instead of 'ADD . /usr/src/'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.
+
+See https://avd.aquasec.com/misconfig/ds-0005
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/debian/7.6/Dockerfile:17
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  17 [ ADD . /usr/src/
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0017 (HIGH): The instruction 'RUN <package-manager> update' should always be followed by '<package-manager> install' in the same RUN statement.
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+The instruction 'RUN <package-manager> update' should always be followed by '<package-manager> install' in the same RUN statement.
+
+See https://avd.aquasec.com/misconfig/ds-0017
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/debian/7.6/Dockerfile:14
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  14 [ RUN apt-get update
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0022 (HIGH): MAINTAINER should not be used: 'MAINTAINER William Blankenship <william.jblankenship@gmail.com>'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+MAINTAINER has been deprecated since Docker 1.13.0.
+
+See https://avd.aquasec.com/misconfig/ds-0022
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/debian/7.6/Dockerfile:2
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   2 [ MAINTAINER William Blankenship <william.jblankenship@gmail.com>
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0026 (LOW): Add HEALTHCHECK instruction in your Dockerfile
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.
+
+See https://avd.aquasec.com/misconfig/ds-0026
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0029 (HIGH): '--no-install-recommends' flag is missed: 'apt-get install nodejs -y --force-yes'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+'apt-get' install should use '--no-install-recommends' to minimize image size.
+
+See https://avd.aquasec.com/misconfig/ds-0029
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/debian/7.6/Dockerfile:15
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  15 [ RUN apt-get install nodejs -y --force-yes
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0029 (HIGH): '--no-install-recommends' flag is missed: 'apt-get update &&     apt-get install -y --force-yes       curl       apt-transport-https       lsb-release       build-essential       python-all'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+'apt-get' install should use '--no-install-recommends' to minimize image size.
+
+See https://avd.aquasec.com/misconfig/ds-0029
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/debian/7.6/Dockerfile:5-11
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   5 ┌ RUN apt-get update && \
+   6 │     apt-get install -y --force-yes \
+   7 │       curl \
+   8 │       apt-transport-https \
+   9 │       lsb-release \
+  10 │       build-essential \
+  11 └       python-all
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+node_modules/getos/tests/fedora/20/Dockerfile (dockerfile)
+==========================================================
+Tests: 27 (SUCCESSES: 22, FAILURES: 5)
+Failures: 5 (UNKNOWN: 0, LOW: 2, MEDIUM: 0, HIGH: 3, CRITICAL: 0)
+
+DS-0002 (HIGH): Specify at least 1 USER command in Dockerfile with non-root user as argument
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.
+
+See https://avd.aquasec.com/misconfig/ds-0002
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0005 (LOW): Consider using 'COPY . /usr/src/' command instead of 'ADD . /usr/src/'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.
+
+See https://avd.aquasec.com/misconfig/ds-0005
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/fedora/20/Dockerfile:6
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   6 [ ADD . /usr/src/
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0015 (HIGH): 'yum clean all' is missed: yum install -y nodejs npm
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should use 'yum clean all' after using a 'yum install' command to clean package cached data and reduce image size.
+
+See https://avd.aquasec.com/misconfig/ds-0015
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/fedora/20/Dockerfile:4
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   4 [ RUN yum install -y nodejs npm
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0022 (HIGH): MAINTAINER should not be used: 'MAINTAINER William Blankenship <william.jblankenship@gmail.com>'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+MAINTAINER has been deprecated since Docker 1.13.0.
+
+See https://avd.aquasec.com/misconfig/ds-0022
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/fedora/20/Dockerfile:2
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   2 [ MAINTAINER William Blankenship <william.jblankenship@gmail.com>
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0026 (LOW): Add HEALTHCHECK instruction in your Dockerfile
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.
+
+See https://avd.aquasec.com/misconfig/ds-0026
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+node_modules/getos/tests/ubuntu/13.10/Dockerfile (dockerfile)
+=============================================================
+Tests: 28 (SUCCESSES: 22, FAILURES: 6)
+Failures: 6 (UNKNOWN: 0, LOW: 2, MEDIUM: 0, HIGH: 4, CRITICAL: 0)
+
+DS-0002 (HIGH): Specify at least 1 USER command in Dockerfile with non-root user as argument
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.
+
+See https://avd.aquasec.com/misconfig/ds-0002
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0005 (LOW): Consider using 'COPY . /usr/src/' command instead of 'ADD . /usr/src/'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.
+
+See https://avd.aquasec.com/misconfig/ds-0005
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/ubuntu/13.10/Dockerfile:15
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  15 [ ADD . /usr/src/
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0017 (HIGH): The instruction 'RUN <package-manager> update' should always be followed by '<package-manager> install' in the same RUN statement.
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+The instruction 'RUN <package-manager> update' should always be followed by '<package-manager> install' in the same RUN statement.
+
+See https://avd.aquasec.com/misconfig/ds-0017
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/ubuntu/13.10/Dockerfile:12
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  12 [ RUN apt-get update
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0026 (LOW): Add HEALTHCHECK instruction in your Dockerfile
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.
+
+See https://avd.aquasec.com/misconfig/ds-0026
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0029 (HIGH): '--no-install-recommends' flag is missed: 'apt-get install nodejs -y --force-yes'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+'apt-get' install should use '--no-install-recommends' to minimize image size.
+
+See https://avd.aquasec.com/misconfig/ds-0029
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/ubuntu/13.10/Dockerfile:13
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  13 [ RUN apt-get install nodejs -y --force-yes
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0029 (HIGH): '--no-install-recommends' flag is missed: 'apt-get update &&     apt-get install -y --force-yes       curl       apt-transport-https       lsb-release       build-essential       python-all'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+'apt-get' install should use '--no-install-recommends' to minimize image size.
+
+See https://avd.aquasec.com/misconfig/ds-0029
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/ubuntu/13.10/Dockerfile:3-9
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   3 ┌ RUN apt-get update && \
+   4 │     apt-get install -y --force-yes \
+   5 │       curl \
+   6 │       apt-transport-https \
+   7 │       lsb-release \
+   8 │       build-essential \
+   9 └       python-all
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+node_modules/getos/tests/ubuntu/14.04/Dockerfile (dockerfile)
+=============================================================
+Tests: 28 (SUCCESSES: 22, FAILURES: 6)
+Failures: 6 (UNKNOWN: 0, LOW: 2, MEDIUM: 0, HIGH: 4, CRITICAL: 0)
+
+DS-0002 (HIGH): Specify at least 1 USER command in Dockerfile with non-root user as argument
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.
+
+See https://avd.aquasec.com/misconfig/ds-0002
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0005 (LOW): Consider using 'COPY . /usr/src/' command instead of 'ADD . /usr/src/'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.
+
+See https://avd.aquasec.com/misconfig/ds-0005
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/ubuntu/14.04/Dockerfile:15
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  15 [ ADD . /usr/src/
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0017 (HIGH): The instruction 'RUN <package-manager> update' should always be followed by '<package-manager> install' in the same RUN statement.
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+The instruction 'RUN <package-manager> update' should always be followed by '<package-manager> install' in the same RUN statement.
+
+See https://avd.aquasec.com/misconfig/ds-0017
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/ubuntu/14.04/Dockerfile:12
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  12 [ RUN apt-get update
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0026 (LOW): Add HEALTHCHECK instruction in your Dockerfile
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.
+
+See https://avd.aquasec.com/misconfig/ds-0026
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0029 (HIGH): '--no-install-recommends' flag is missed: 'apt-get install nodejs -y --force-yes'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+'apt-get' install should use '--no-install-recommends' to minimize image size.
+
+See https://avd.aquasec.com/misconfig/ds-0029
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/ubuntu/14.04/Dockerfile:13
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  13 [ RUN apt-get install nodejs -y --force-yes
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0029 (HIGH): '--no-install-recommends' flag is missed: 'apt-get update &&     apt-get install -y --force-yes       curl       apt-transport-https       lsb-release       build-essential       python-all'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+'apt-get' install should use '--no-install-recommends' to minimize image size.
+
+See https://avd.aquasec.com/misconfig/ds-0029
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ node_modules/getos/tests/ubuntu/14.04/Dockerfile:3-9
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   3 ┌ RUN apt-get update && \
+   4 │     apt-get install -y --force-yes \
+   5 │       curl \
+   6 │       apt-transport-https \
+   7 │       lsb-release \
+   8 │       build-essential \
+   9 └       python-all
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+test/smoke/Dockerfile (dockerfile)
+==================================
+Tests: 27 (SUCCESSES: 23, FAILURES: 4)
+Failures: 4 (UNKNOWN: 0, LOW: 1, MEDIUM: 1, HIGH: 2, CRITICAL: 0)
+
+DS-0001 (MEDIUM): Specify a tag in the 'FROM' statement for image 'alpine'
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+When using a 'FROM' statement you should use a specific tag to avoid uncontrolled behavior when the image is updated.
+
+See https://avd.aquasec.com/misconfig/ds-0001
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ test/smoke/Dockerfile:1
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1 [ FROM alpine
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0002 (HIGH): Specify at least 1 USER command in Dockerfile with non-root user as argument
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.
+
+See https://avd.aquasec.com/misconfig/ds-0002
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0025 (HIGH): '--no-cache' is missed: apk add curl
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should use 'apk add' with '--no-cache' to clean package cached data and reduce image size.
+
+See https://avd.aquasec.com/misconfig/ds-0025
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ test/smoke/Dockerfile:3
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   3 [ RUN apk add curl
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+DS-0026 (LOW): Add HEALTHCHECK instruction in your Dockerfile
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.
+
+See https://avd.aquasec.com/misconfig/ds-0026
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
