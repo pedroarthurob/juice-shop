@@ -1,241 +1,330 @@
-# ![Juice Shop Logo](https://raw.githubusercontent.com/juice-shop/juice-shop/master/frontend/src/assets/public/images/JuiceShop_Logo_100px.png) OWASP Juice Shop
+# 🍹 Análise Comparativa de Segurança
 
-[![OWASP Flagship](https://img.shields.io/badge/owasp-flagship%20project-48A646.svg)](https://owasp.org/projects/#sec-flagships)
-[![GitHub release](https://img.shields.io/github/release/juice-shop/juice-shop.svg)](https://github.com/juice-shop/juice-shop/releases/latest)
-[![Twitter Follow](https://img.shields.io/twitter/follow/owasp_juiceshop.svg?style=social&label=Follow)](https://twitter.com/owasp_juiceshop)
-[![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/owasp_juiceshop?style=social)](https://reddit.com/r/owasp_juiceshop)
+## OWASP Juice Shop — Ferramentas Tradicionais vs LLM
 
-![CI/CD Pipeline](https://github.com/juice-shop/juice-shop/workflows/CI/CD%20Pipeline/badge.svg?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/juice-shop/juice-shop/badge.svg?branch=develop)](https://coveralls.io/github/juice-shop/juice-shop?branch=develop)[![Cypress tests](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/3hrkhu/master&style=flat&logo=cypress)](https://dashboard.cypress.io/projects/3hrkhu/runs)
-[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/223/badge)](https://www.bestpractices.dev/projects/223)
-![GitHub stars](https://img.shields.io/github/stars/juice-shop/juice-shop.svg?label=GitHub%20%E2%98%85&style=flat)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
+Projeto desenvolvido na disciplina de **Segurança de Sistemas** com o objetivo de comparar ferramentas tradicionais de detecção de vulnerabilidades com uma análise manual assistida por LLM, utilizando como alvo a aplicação vulnerável **OWASP Juice Shop**.
 
-> [The most trustworthy online shop out there.](https://twitter.com/dschadow/status/706781693504589824)
-> ([@dschadow](https://github.com/dschadow)) —
-> [The best juice shop on the whole internet!](https://twitter.com/shehackspurple/status/907335357775085568)
-> ([@shehackspurple](https://twitter.com/shehackspurple)) —
-> [Actually the most bug-free vulnerable application in existence!](https://youtu.be/TXAztSpYpvE?t=26m35s)
-> ([@vanderaj](https://twitter.com/vanderaj)) —
-> [First you 😂😂then you 😢](https://twitter.com/kramse/status/1073168529405472768)
-> ([@kramse](https://twitter.com/kramse)) —
-> [But this doesn't have anything to do with juice.](https://twitter.com/coderPatros/status/1199268774626488320)
-> ([@coderPatros' wife](https://twitter.com/coderPatros))
+---
 
-OWASP Juice Shop is probably the most modern and sophisticated insecure web application! It can be used in security
-trainings, awareness demos, CTFs and as a guinea pig for security tools! Juice Shop encompasses vulnerabilities from the
-entire
-[OWASP Top Ten](https://owasp.org/www-project-top-ten) along with many other security flaws found in real-world
-applications!
+## 📄 Relatório Completo
 
-![Juice Shop Screenshot Slideshow](screenshots/slideshow.gif)
+O relatório técnico detalhado contendo:
 
-For a detailed introduction, full list of features and architecture overview please visit the official project page:
-<https://owasp-juice.shop>
+* Metodologia completa
+* Prompt utilizado na análise com LLM
+* Comparação técnica aprofundada
+* Discussão e limitações
+* Conclusão final
 
-## Table of contents
+Está disponível [aqui](https://docs.google.com/document/d/1pYtsARmDzzym986M2wgpwNlNXHppjO_ddeY1XCm7mFo/edit?usp=sharing).
 
-- [Setup](#setup)
-    - [From Sources](#from-sources)
-    - [Packaged Distributions](#packaged-distributions)
-    - [Docker Container](#docker-container)
-    - [Vagrant](#vagrant)
-- [Demo](#demo)
-- [Documentation](#documentation)
-    - [Node.js version compatibility](#nodejs-version-compatibility)
-    - [Troubleshooting](#troubleshooting)
-    - [Official companion guide](#official-companion-guide)
-- [Contributing](#contributing)
-- [References](#references)
-- [Merchandise](#merchandise)
-- [Donations](#donations)
-- [Contributors](#contributors)
-- [Licensing](#licensing)
+---
 
-## Setup
+## 📚 Sobre a aplicação analisada
 
-> You can find some less common installation variations as well as instructions to run Juice Shop on a variety of cloud computing providers in
-> [the _Running OWASP Juice Shop_ documentation](https://pwning.owasp-juice.shop/companion-guide/latest/part1/running.html).
+Este repositório é um fork do projeto oficial:
 
-### From Sources
+**OWASP Juice Shop**
 
-![GitHub repo size](https://img.shields.io/github/repo-size/juice-shop/juice-shop.svg)
+Repositório oficial:
+[https://github.com/juice-shop/juice-shop](https://github.com/juice-shop/juice-shop)
 
-1. Install [node.js](#nodejs-version-compatibility)
-2. Run `git clone https://github.com/juice-shop/juice-shop.git --depth 1` (or
-   clone [your own fork](https://github.com/juice-shop/juice-shop/fork)
-   of the repository)
-3. Go into the cloned folder with `cd juice-shop`
-4. Run `npm install` (only has to be done before first start or when you change the source code)
-5. Run `npm start`
-6. Browse to <http://localhost:3000>
+Página oficial:
+[https://owasp-juice.shop](https://owasp-juice.shop)
 
-### Packaged Distributions
+O Juice Shop é uma aplicação web propositalmente vulnerável, utilizada para:
 
-[![GitHub release](https://img.shields.io/github/downloads/juice-shop/juice-shop/total.svg)](https://github.com/juice-shop/juice-shop/releases/latest)
-[![SourceForge](https://img.shields.io/sourceforge/dm/juice-shop?label=sourceforge%20downloads)](https://sourceforge.net/projects/juice-shop/)
-[![SourceForge](https://img.shields.io/sourceforge/dt/juice-shop?label=sourceforge%20downloads)](https://sourceforge.net/projects/juice-shop/)
+* Treinamentos de segurança
+* Testes de ferramentas (SAST, SCA, DAST)
+* CTFs
+* Demonstrações de vulnerabilidades reais
 
-1. Install a 64bit [node.js](#nodejs-version-compatibility) on your Windows, MacOS or Linux machine
-2. Download `juice-shop-<version>_<node-version>_<os>_x64.zip` (or
-   `.tgz`) attached to
-   [latest release](https://github.com/juice-shop/juice-shop/releases/latest)
-3. Unpack and `cd` into the unpacked folder
-4. Run `npm start`
-5. Browse to <http://localhost:3000>
+⚠️ Este fork foi utilizado exclusivamente para fins acadêmicos.
 
-> Each packaged distribution includes some binaries for `sqlite3` and
-> `libxmljs2` bound to the OS and node.js version which `npm install` was
-> executed on.
+---
 
-### Docker Container
+# 🎯 Objetivo do Projeto
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/bkimminich/juice-shop.svg)](https://hub.docker.com/r/bkimminich/juice-shop)
-![Docker Stars](https://img.shields.io/docker/stars/bkimminich/juice-shop.svg)
-[![](https://images.microbadger.com/badges/image/bkimminich/juice-shop.svg)](https://microbadger.com/images/bkimminich/juice-shop
-"Get your own image badge on microbadger.com")
-[![](https://images.microbadger.com/badges/version/bkimminich/juice-shop.svg)](https://microbadger.com/images/bkimminich/juice-shop
-"Get your own version badge on microbadger.com")
+Comparar duas abordagens distintas de análise de segurança:
 
-1. Install [Docker](https://www.docker.com)
-2. Run `docker pull bkimminich/juice-shop`
-3. Run `docker run --rm -p 127.0.0.1:3000:3000 bkimminich/juice-shop`
-4. Browse to <http://localhost:3000> (on macOS and Windows browse to
-   <http://192.168.99.100:3000> if you are using docker-machine instead of the native docker installation)
+## 🔎 1. Ferramentas Tradicionais
 
-### Vagrant
+* SCA (Software Composition Analysis)
+* SAST (Static Application Security Testing)
+* DAST (Dynamic Application Security Testing)
+* Análise de secrets
+* Misconfiguration scanning
 
-1. Install [Vagrant](https://www.vagrantup.com/downloads.html) and
-   [Virtualbox](https://www.virtualbox.org/wiki/Downloads)
-2. Run `git clone https://github.com/juice-shop/juice-shop.git` (or
-   clone [your own fork](https://github.com/juice-shop/juice-shop/fork)
-   of the repository)
-3. Run `cd vagrant && vagrant up`
-4. Browse to [192.168.56.110](http://192.168.56.110)
+Ferramentas utilizadas:
 
-## Demo
+* Trivy
+* Grype
+* Semgrep
+* OWASP ZAP
 
-Feel free to have a look at the latest version of OWASP Juice Shop:
-<http://demo.owasp-juice.shop>
+---
 
-> This is a deployment-test and sneak-peek instance only! You are __not
-> supposed__ to use this instance for your own hacking endeavours! No
-> guaranteed uptime! Guaranteed stern looks if you break it!
+## 🤖 2. Análise Assistida por LLM
 
-## Documentation
+* Revisão manual completa do código-fonte
+* Prompt estruturado simulando um engenheiro de Application Security sênior
+* Geração de relatório técnico consolidado
 
-### Node.js version compatibility
+Modelo utilizado: GPT-5.2 (Agent Mode)
 
-![GitHub package.json dynamic](https://img.shields.io/github/package-json/cpu/juice-shop/juice-shop)
-![GitHub package.json dynamic](https://img.shields.io/github/package-json/os/juice-shop/juice-shop)
+---
 
-OWASP Juice Shop officially supports the following versions of
-[node.js](http://nodejs.org) in line with the official
-[node.js LTS schedule](https://github.com/nodejs/LTS) as close as possible. Docker images and packaged distributions are
-offered accordingly.
+# 🧪 Metodologia
 
-| node.js | Supported              | Tested             | [Packaged Distributions](#packaged-distributions) | [Docker images](#docker-container) from `master` | [Docker images](#docker-container) from `develop` |
-|:--------|:-----------------------|:-------------------|:--------------------------------------------------|:-------------------------------------------------|:--------------------------------------------------|
-| 25.x    | :x:                    | :x:                |                                                   |                                                  |                                                   |
-| 24.x    | :heavy_check_mark:     | :heavy_check_mark: | Windows (`x64`), MacOS (`x64`), Linux (`x64`)     |                                                  |                                                   |
-| 23.x    | ( :heavy_check_mark: ) | :x:                |                                                   |                                                  |                                                   |
-| 22.x    | :heavy_check_mark:     | :heavy_check_mark: | Windows (`x64`), MacOS (`x64`), Linux (`x64`)     | `latest` (`linux/amd64`, `linux/arm64`)          | `snapshot` (`linux/amd64`, `linux/arm64`)         |
-| 21.x    | ( :heavy_check_mark: ) | :x:                |                                                   |                                                  |                                                   |
-| 20.x    | :heavy_check_mark:     | :heavy_check_mark: | Windows (`x64`), MacOS (`x64`), Linux (`x64`)     |                                                  |                                                   |
-| <20.x   | :x:                    | :x:                |                                                   |                                                  |                                                   |
+1. Fork do repositório oficial
+2. Execução das ferramentas no código-fonte
+3. Armazenamento dos artefatos na pasta `results/`
+4. Execução de análise manual assistida por LLM
+5. Comparação qualitativa e quantitativa dos resultados
 
-Juice Shop is automatically tested _only on the latest `.x` minor version_ of each node.js version mentioned above!
-There is no guarantee that older minor node.js releases will always work with Juice Shop!
-Please make sure you stay up to date with your chosen version.
+---
 
-### Troubleshooting
+# 📂 Estrutura dos Resultados
 
-[![Gitter](http://img.shields.io/badge/gitter-join%20chat-1dce73.svg)](https://gitter.im/bkimminich/juice-shop)
+Todos os artefatos gerados durante o experimento estão organizados em `results/`.
 
-If you need help with the application setup please check 
-[our existing _Troubleshooting_](https://pwning.owasp-juice.shop/companion-guide/latest/part4/troubleshooting.html)
-guide. If this does not solve your issue please post your specific problem or question in the
-[Gitter Chat](https://gitter.im/bkimminich/juice-shop) where community members can best try to help you.
+```
+results/
+├── gpt 5.2/
+│   └── LLM_Security_Report.md
+├── grype/
+│   └── full-scan.txt
+├── semgrep/
+│   └── report.txt
+├── trivy/
+│   ├── dependency-tree.txt
+│   ├── full-scan.txt
+│   ├── misconfig.txt
+│   ├── report.sarif
+│   ├── secrets.txt
+│   └── vulnerabilities.txt
+└── zap/
+    ├── ZAP-Report.html
+    ├── normalize/
+    │   └── normalize.css
+    ├── themes/
+    │   └── original/
+    │       ├── colors.css
+    │       └── main.css
+    └── zap32x32.png
+```
 
-:stop_sign: **Please avoid opening GitHub issues for support requests or questions!**
+---
 
-### Official companion guide
+# 🛠 Ferramentas Utilizadas
 
-[![Write Goodreads Review](https://img.shields.io/badge/goodreads-write%20review-49557240.svg)](https://www.goodreads.com/review/edit/49557240)
+## 🔍 Trivy
 
-OWASP Juice Shop comes with an official companion guide eBook. It will give you a complete overview of all
-vulnerabilities found in the application including hints how to spot and exploit them. In the appendix you will even
-find complete step-by-step solutions to every challenge. Extensive documentation of
-[custom re-branding](https://pwning.owasp-juice.shop/companion-guide/latest/part4/customization.html),
-[CTF-support](https://pwning.owasp-juice.shop/companion-guide/latest/part4/ctf.html),
-[trainer's guide](https://pwning.owasp-juice.shop/companion-guide/latest/part4/trainers.html)
-and much more is also included.
+Site oficial: [https://trivy.dev/](https://trivy.dev/)
 
-[Pwning OWASP Juice Shop](https://leanpub.com/juice-shop) is published under
-[CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)
-and is available **for free** in PDF, Kindle and ePub format on LeanPub. You can also
-[browse the full content online](https://pwning.owasp-juice.shop)!
+Utilizado para:
 
-[<img alt="Pwning OWASP Juice Shop cover" src="https://raw.githubusercontent.com/juice-shop/pwning-juice-shop/master/docs/modules/ROOT/assets/images/cover.jpg" width="200"/>](https://leanpub.com/juice-shop)
-[<img alt="Pwning OWASP Juice Shop back cover" src="https://raw.githubusercontent.com/juice-shop/pwning-juice-shop/master/docs/modules/ROOT/assets/images/introduction/back.jpg" width="200"/>](https://leanpub.com/juice-shop)
+* Vulnerabilidades (SCA)
+* Secrets
+* Misconfigurações
+* Exportação SARIF
 
-## Contributing
+### Execução
 
-[![GitHub contributors](https://img.shields.io/github/contributors/juice-shop/juice-shop.svg)](https://github.com/juice-shop/juice-shop/graphs/contributors)
-[![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
-[![Crowdin](https://d322cqt584bo4o.cloudfront.net/owasp-juice-shop/localized.svg)](https://crowdin.com/project/owasp-juice-shop)
-![GitHub issues by-label](https://img.shields.io/github/issues/juice-shop/juice-shop/help%20wanted.svg)
-![GitHub issues by-label](https://img.shields.io/github/issues/juice-shop/juice-shop/good%20first%20issue.svg)
+```bash
+trivy fs . | tee results/trivy/full-scan.txt
+trivy fs --scanners vuln . | tee results/trivy/vulnerabilities.txt
+trivy fs --scanners secret . | tee results/trivy/secrets.txt
+trivy fs --scanners misconfig . | tee results/trivy/misconfig.txt
+trivy fs --format sarif -o results/trivy/report.sarif .
+```
 
-We are always happy to get new contributors on board! Please check
-[CONTRIBUTING.md](CONTRIBUTING.md) to learn how to
-[contribute to our codebase](CONTRIBUTING.md#code-contributions) or the
-[translation into different languages](CONTRIBUTING.md#i18n-contributions)!
+---
 
-## References
+## 🧩 Grype
 
-Did you write a blog post, magazine article or do a podcast about or mentioning OWASP Juice Shop? Or maybe you held or
-joined a conference talk or meetup session, a hacking workshop or public training where this project was mentioned?
+Repositório oficial: [https://github.com/anchore/grype](https://github.com/anchore/grype)
 
-Add it to our ever-growing list of [REFERENCES.md](REFERENCES.md) by forking and opening a Pull Request!
+Foco em detecção de CVEs via análise de dependências (SCA).
 
-## Merchandise
+```bash
+grype . | tee results/grype/full-scan.txt
+```
 
-* On [Spreadshirt.com](http://shop.spreadshirt.com/juiceshop) and
-  [Spreadshirt.de](http://shop.spreadshirt.de/juiceshop) you can get some swag (Shirts, Hoodies, Mugs) with the official
-  OWASP Juice Shop logo
-* On
-  [StickerYou.com](https://www.stickeryou.com/products/owasp-juice-shop/794)
-  you can get variants of the OWASP Juice Shop logo as single stickers to decorate your laptop with. They can also print
-  magnets, iron-ons, sticker sheets and temporary tattoos.
+---
 
-## Donations
+## 🧠 Semgrep
 
-[![](https://img.shields.io/badge/support-owasp%20juice%20shop-blue)](https://owasp.org/donate/?reponame=www-project-juice-shop&title=OWASP+Juice+Shop)
+Site oficial: [https://semgrep.dev/](https://semgrep.dev/)
 
-The OWASP Foundation gratefully accepts donations via Stripe. Projects such as Juice Shop can then request reimbursement
-for expenses from the Foundation. If you'd like to express your support of the Juice Shop project, please make sure to
-tick the "Publicly list me as a supporter of OWASP Juice Shop" checkbox on the donation form. You can find our more
-about donations and how they are used here:
+Ferramenta de SAST baseada em padrões.
 
-<https://pwning.owasp-juice.shop/companion-guide/latest/part3/donations.html>
+```bash
+semgrep --config=p/security-audit . | tee results/semgrep/report.txt
+```
 
-## Contributors
+---
 
-The OWASP Juice Shop Project Leaders are:
+## 🌐 OWASP ZAP (DAST)
 
-- [Björn Kimminich](https://github.com/bkimminich) aka `bkimminich` [![Keybase PGP](https://img.shields.io/keybase/pgp/bkimminich)](https://keybase.io/bkimminich)
-- [Jannik Hollenbach](https://github.com/J12934) aka `J12934`
+Ferramenta de análise dinâmica de segurança desenvolvida pelo projeto
+OWASP.
 
-For a list of all contributors to the OWASP Juice Shop please visit our
-[HALL_OF_FAME.md](HALL_OF_FAME.md).
+A aplicação foi executada localmente em:
 
-## Licensing
+```
+http://localhost:3000
+```
 
-[![license](https://img.shields.io/github/license/juice-shop/juice-shop.svg)](LICENSE)
+Foram realizados:
 
-This program is free software: you can redistribute it and/or modify it under the terms of the [MIT license](LICENSE).
-OWASP Juice Shop and any contributions are Copyright © by Bjoern Kimminich & the OWASP Juice Shop contributors
-2014-2026.
+* Spider Scan
+* Active Scan
 
-![Juice Shop Logo](https://raw.githubusercontent.com/juice-shop/juice-shop/master/frontend/src/assets/public/images/JuiceShop_Logo_400px.png)
+O processo de execução do scan seguiu como referência
+[este tutorial](https://www.youtube.com/watch?v=Dl-srkru6Ak).
+
+Relatório gerado:
+
+```
+results/zap/ZAP-Report.html
+```
+
+Observação: o relatório HTML depende dos arquivos de estilo presentes na mesma pasta (`normalize/`, `themes/`).
+
+---
+
+# 🤖 Análise Assistida por LLM
+
+A análise foi realizada utilizando um prompt estruturado que simula uma revisão manual completa de segurança do código-fonte.
+
+O modelo foi instruído explicitamente a:
+
+* Ignorar completamente a pasta `results/`
+* Analisar apenas o código da aplicação
+* Reportar apenas vulnerabilidades com impacto real de segurança
+
+Critérios analisados:
+
+* Injection (SQL, Command, Template)
+* XSS
+* Authentication e Authorization flaws
+* Hardcoded secrets
+* Cryptography misuse
+* CSRF
+* Open redirect
+* Sensitive data exposure
+* Business logic flaws
+* Session handling
+
+### 📜 Prompt Utilizado
+
+O prompt completo utilizado na análise encontra-se documentado no relatório técnico.
+
+Ele inclui:
+
+* Contexto fornecido ao modelo
+* Objetivos explícitos
+* Restrições
+* Formato esperado de saída
+
+Relatório final:
+
+```
+results/gpt 5.2/LLM_Security_Report.md
+```
+
+---
+
+# ▶️ Como Reproduzir o Experimento
+
+## 1️⃣ Clonar o repositório
+
+```bash
+git clone https://github.com/pedroarthurob/juice-shop.git
+cd juice-shop
+```
+
+## 2️⃣ Instalar dependências
+
+```bash
+npm install
+```
+
+## 3️⃣ Executar ferramentas
+
+Certifique-se de ter instalado:
+
+* Trivy
+* Grype
+* Semgrep
+* OWASP ZAP
+
+Execute os comandos descritos nas seções anteriores para gerar os artefatos dentro de `results/`.
+
+---
+
+# 🌐 Executar a Aplicação (Opcional)
+
+Para rodar via Docker:
+
+```bash
+docker pull bkimminich/juice-shop
+docker run --rm -p 3000:3000 bkimminich/juice-shop
+```
+
+Acesse:
+
+[http://localhost:3000](http://localhost:3000)
+
+Para instruções completas (Node, Vagrant, distribuições empacotadas etc.), consulte o repositório oficial do projeto.
+
+---
+
+# 📊 Conclusão do Experimento
+
+Com base na análise realizada, observou-se que:
+
+* Ferramentas tradicionais demonstraram alta velocidade e eficiência na detecção de vulnerabilidades conhecidas.
+* O LLM foi capaz de identificar essencialmente as mesmas vulnerabilidades detectadas pelas ferramentas.
+* O LLM também identificou vulnerabilidades contextuais e falhas de lógica de negócio não claramente detectadas pelas ferramentas automatizadas.
+
+Entretanto:
+
+* Ferramentas tradicionais são superiores em velocidade, custo e escalabilidade.
+* A análise com LLM apresentou maior profundidade explicativa, porém com maior tempo de execução e custo computacional.
+
+Conclusão principal:
+
+LLMs não substituem ferramentas tradicionais, mas representam um complemento poderoso em auditorias de segurança mais aprofundadas.
+
+A combinação entre ferramentas automatizadas e análise assistida por LLM mostrou-se a abordagem mais completa para análise de segurança.
+
+Do ponto de vista prático, ferramentas automatizadas permanecem essenciais para integração contínua e pipelines DevSecOps, enquanto LLMs mostram maior valor em auditorias exploratórias e revisões aprofundadas.
+
+---
+
+# 👥 Integrantes
+
+* Pedro Arthur de Oliveira Barreto
+* Rayane Bezerra da Silva
+
+Disciplina: **Segurança de Sistemas**
+
+---
+
+# 📌 Considerações Finais
+
+Este projeto possui caráter exclusivamente acadêmico e experimental.
+
+O experimento buscou avaliar empiricamente:
+
+* Capacidade real de detecção
+* Cobertura comparativa
+* Limitações práticas
+* Reprodutibilidade
+* Impacto da análise contextual
+
+O resultado demonstra que a integração entre ferramentas tradicionais e LLMs pode representar uma evolução relevante no processo de revisão de segurança.
+
+---
